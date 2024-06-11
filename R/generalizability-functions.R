@@ -6,7 +6,6 @@
 #' @export
 is_binary <- function(x) {
   
-  
   unique_values <- unique(x)
   if (length(unique_values) <= 2 && all(unique_values %in% c(0, 1))) {
     return(TRUE)
@@ -33,7 +32,7 @@ mu_hat_est <-function(data,X,Y,A,val_idx,
                       sl.lib) {
 
   # First, make sure to only fit on validation data
-  data_fit <- data[data[,val_idx]==1,] # %>% filter(val_idx==1)
+  data_fit <- data[data[,val_idx]==1,] 
   
   Y = data_fit[,Y]
   outcovs = data_fit[,c(X,A)]
@@ -195,7 +194,7 @@ generalizability_est <- function(data,
     kappa_hat <- kappa_hat_est(data,X,val_idx,sl.lib)$pred
   }
   
-  # Form EIF
+  # Form the EIF
   genz_eif <- generalizability_eif(mu_hat1, mu_hat0,
                                    pi_hat,
                                    kappa_hat,
@@ -234,7 +233,7 @@ controlVariatesMEGen <- function(data,
                                  estimand='ATE',
                                  rho=NA) {
 
-  n <- nrow(data)
+  n <- nrow(data) # keep track of full data size
   
   # First, get ATE estimate pre-variance reduction
   ate_eif_genz <- generalizability_est(data,
@@ -255,20 +254,20 @@ controlVariatesMEGen <- function(data,
   ate_eif_ep_main <- get_tau_hat(data,X,Y,Astar,estimand,sl.lib)
   tau_hat_ep_main <- ate_eif_ep_main$estimates$RD['Estimate']
   
-  # Now, construct CV estimator. First, get Gamma
-  eif_val <- ate_eif_genz$EIF
+  # Now, construct the CV estimator. First, get Gamma
+  eif_val <- ate_eif_genz$EIF 
   eif_val_ep <- ate_eif_ep_val_genz$EIF
   eif_main_ep <- ate_eif_ep_main$obs_est$aipw_eif1 -
     ate_eif_ep_main$obs_est$aipw_eif0
-  gamma_hat <- 1/n * (cov(eif_val,eif_main_ep) -
-                        cov(eif_val,eif_val_ep))
+  gamma_hat <- 1/n * (cov(eif_val,eif_val_ep) -
+                        cov(eif_val,eif_main_ep))
   
   # Next, get V
-  V_hat <- 1/n * var(eif_val_ep + eif_main_ep)
+  V_hat <- 1/n * var(eif_val_ep - eif_main_ep)
   # print(gamma_hat/V_hat)
   
   # Finally, form the CV estimator
-  tau_cv <- tau_hat_val - gamma_hat/V_hat * (tau_hat_ep_main - tau_hat_ep_val)
+  tau_cv <- tau_hat_val - gamma_hat/V_hat * (tau_hat_ep_val - tau_hat_ep_main)
   
   # Get variance estimate for CV est variance
   var_hat <- v_hat_val - gamma_hat^2/V_hat

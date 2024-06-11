@@ -9,9 +9,9 @@ generalizability_est(data, X, Y, A, val_idx, sl.lib, rho = NA)
 \arguments{
 \item{data}{A dataframe containing the outcome, treatment and covariates}
 
-\item{X}{A vector of covariates}
+\item{X}{A vector of covariate names}
 
-\item{Y}{A vector of outcomes}
+\item{Y}{A vector of outcome names}
 
 \item{A}{A vector of treatments}
 

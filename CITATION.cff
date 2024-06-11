@@ -1,0 +1,22 @@
+---
+  cff-version: 1.2.0
+message: "This file was generated for the repository on GitHub."
+authors:
+  - family-names: Barnatchez
+given-names: Keith
+title: "Flexible and Efficient Estimation of Causal Effects with Error-Prone
+Exposures: A Control Variates Approach for Measurement Error"
+doi: "10.5281/zenodo.1234567"  # Replace with the actual DOI if available
+version: "1.0.0"
+date-released: 2024-06-11
+repository-code: 
+  url: "https://github.com/keithbarnatchez/controlVariatesME"
+keywords:
+  - causal inference
+- measurement error
+- control variates
+- statistical estimation
+- data-adaptive methods
+language:
+  - en
+---

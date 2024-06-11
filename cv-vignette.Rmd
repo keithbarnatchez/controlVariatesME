@@ -1,0 +1,86 @@
+---
+title: "Using the controlVariatesME package"
+author: "Keith Barnatchez"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  This vignette provides a tutorial on how to use the controlVariatesME package.
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4, tibble.print_max = 4)
+```
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+\tableofcontents
+
+## Overview
+
+## Installation
+
+```{r, echo=FALSE, eval=FALSE}
+devtools::install_github("keithbarnatchez/controlVariatesME")
+library(AIPW)
+```
+
+## Tutorial
+
+
+```{r}
+n <- 2500
+rho <- 0.1
+misclass <- 0.15
+sl.lib <- 'SL.ranger'
+
+# Simulate data
+X <- rnorm(n) # single covariate
+A <- rbinom(n,1,prob=exp(X)/(1+exp(X))) # true exposure
+missclass_idx <- rbinom(n,1,prob=misclass) # simulate incorrect classifications
+Astar <- ifelse(missclass_idx==1,1-A,A) # misclassified exposure
+Y <- A + X + rnorm(n) # outcome
+S <- rbinom(n,1,prob=rho) # validation data
+
+# Create a dataframe
+df <- data.frame(X=X,A=A,Astar=Astar,Y=Y, S=S)
+```
+
+### 1. Implementing the control variates method
+
+```{r}
+# cvme_results <- controlVariatesME::controlVariatesME(df, X='X', Y='Y',
+                                                   # A='A', Astar='Astar', 
+                                  # val_idx='S', sl.lib=sl.lib)
+```
+
+### 2. Extracting output 
+
+
+
+
+
+<!-- ## Vignette Info -->
+
+<!-- Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette. -->
+
+<!-- ## More Examples -->
+
+<!-- You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`. -->
+
+<!-- ```{r, echo=FALSE, results='asis'} -->
+<!-- knitr::kable(head(mtcars, 10)) -->
+<!-- ``` -->
+
+<!-- Also a quote using `>`: -->
+
+<!-- > "He who gives up [code] safety for [code] speed deserves neither." -->
+<!-- ([via](https://twitter.com/hadleywickham/status/504368538874703872)) -->
