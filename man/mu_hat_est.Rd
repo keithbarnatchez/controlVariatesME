@@ -9,13 +9,13 @@ mu_hat_est(data, X, Y, A, val_idx, sl.lib)
 \arguments{
 \item{data}{A dataframe containing the outcome, treatment and covariates}
 
-\item{X}{A vector of covariates}
+\item{X}{A vector of covariate names}
 
-\item{Y}{A vector of outcomes}
+\item{Y}{String containing outcome name}
 
-\item{A}{A vector of treatments}
+\item{A}{String containing treatment name}
 
-\item{val_idx}{A vector of validation data indicators}
+\item{val_idx}{String containing validation index name}
 
 \item{sl.lib}{A vector of super learner libraries to use}
 }

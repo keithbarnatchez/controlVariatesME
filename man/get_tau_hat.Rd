@@ -9,11 +9,11 @@ get_tau_hat(df, X, Y, A, estimand, sl.lib)
 \arguments{
 \item{df}{A dataframe containing the outcome, treatment and covariates}
 
-\item{X}{A vector of covariates}
+\item{X}{A vector of covariate names}
 
-\item{Y}{A vector of outcomes}
+\item{Y}{String containing the outcome name}
 
-\item{A}{A vector of treatments}
+\item{A}{String containing the treatment name}
 
 \item{estimand}{The estimand of interest (e.g. ATE, ATT, ATC)}
 

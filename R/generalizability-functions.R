@@ -1,4 +1,8 @@
- 
+#' @import dplyr
+#' @import AIPW
+#' @import SuperLearner
+NULL
+
 #' Function for checking if a vector is binary 
 #' 
 #' @param x A vector of values
@@ -16,14 +20,13 @@ is_binary <- function(x) {
   }
 }
 
-
 #' Function for estimating the outcome model
 #'
 #' @param data A dataframe containing the outcome, treatment and covariates
-#' @param X A vector of covariates
-#' @param Y A vector of outcomes
-#' @param A A vector of treatments
-#' @param val_idx A vector of validation data indicators
+#' @param X A vector of covariate names
+#' @param Y String containing outcome name
+#' @param A String containing treatment name
+#' @param val_idx String containing validation index name
 #' @param sl.lib A vector of super learner libraries to use
 #' 
 #' @return A list containing the estimated outcome model
@@ -66,8 +69,8 @@ mu_hat_est <-function(data,X,Y,A,val_idx,
 #' Function for estimating the propensity score model
 #'
 #' @param data A dataframe containing the outcome, treatment and covariates
-#' @param X A vector of covariates
-#' @param A A vector of treatments
+#' @param X A vector of covariate names
+#' @param A String containing treatment name
 #' @param sl.lib A vector of super learner libraries to use
 #' 
 #' @return A vector containing the estimated propensity score model
@@ -129,10 +132,10 @@ kappa_hat_est <- function(data,
 #' @param pi_hat A vector of predicted propensity scores
 #' @param kappa_hat A vector of predicted selection probabilities
 #' @param data A dataframe containing the outcome, treatment and covariates
-#' @param X A vector of covariates
-#' @param Y A vector of outcomes
-#' @param A A vector of treatments
-#' @param val_idx A vector of validation indices
+#' @param X A vector of covariate names
+#' @param Y String containing outcome name
+#' @param A String containing treatment name
+#' @param val_idx String containing validation index name
 #' 
 #' @return A vector containing the estimated EIF
 #' @export
@@ -163,9 +166,9 @@ generalizability_eif <- function(mu_hat1, mu_hat0,
 #'
 #' @param data A dataframe containing the outcome, treatment and covariates
 #' @param X A vector of covariate names
-#' @param Y A vector of outcome names
-#' @param A A vector of treatments
-#' @param val_idx A vector of validation indices
+#' @param Y String containing outcome name
+#' @param A String containing treatment name
+#' @param val_idx String containing validation index name
 #' @param sl.lib A vector of super learner libraries to use
 #'
 #' @return A vector containing the estimated EIF
@@ -215,11 +218,11 @@ generalizability_est <- function(data,
 #' Main function for implementing the "generalizability" version of the control
 #' variates estimator
 #' 
-#' @param data A dataframe 
-#' @param X A vector of covariates
-#' @param Y A vector of outcomes
-#' @param A A vector of treatments
-#' @param val_idx A vector of validation indices
+#' @param data A dataframe containing the outcome, treatment and covariates
+#' @param X A vector of covariate names
+#' @param Y String containing outcome name
+#' @param A String containing treatment name
+#' @param val_idx String containing validation index name
 #' @param sl.lib A vector of super learner libraries to use
 #' @param estimand The estimand of interest (either 'ATE' or 'ATT')
 #' @param rho A vector of participation probabilities
@@ -240,15 +243,15 @@ controlVariatesMEGen <- function(data,
                                        X,Y,A,val_idx,
                                        sl.lib,
                                        rho)
-  tau_hat_val <- ate_eif_genz$ATE
-  v_hat_val <- ate_eif_genz$v_hat
+  tau_hat_val <- ate_eif_genz$ATE # validation data based estimate
+  v_hat_val <- ate_eif_genz$v_hat # estimated variance 
   
   # Next, get error-prone ATE estimates (val data -> main)
   ate_eif_ep_val_genz <- generalizability_est(data,
                                               X,Y,Astar,val_idx,
                                               sl.lib,
                                               rho)
-  tau_hat_ep_val <- ate_eif_ep_val_genz$ATE
+  tau_hat_ep_val <- ate_eif_ep_val_genz$ATE 
   
   # Next, get error-prone ATE estimates over the main data
   ate_eif_ep_main <- get_tau_hat(data,X,Y,Astar,estimand,sl.lib)

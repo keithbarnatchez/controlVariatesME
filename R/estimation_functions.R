@@ -73,9 +73,9 @@ demean <- function(x) {
 #' Get val. estimate
 #'
 #' @param df A dataframe containing the outcome, treatment and covariates
-#' @param X A vector of covariates
-#' @param Y A vector of outcomes
-#' @param A A vector of treatments
+#' @param X A vector of covariate names
+#' @param Y String containing the outcome name
+#' @param A String containing the treatment name
 #' @param estimand The estimand of interest (e.g. ATE, ATT, ATC)
 #' @param sl.lib A vector of super learner libraries to use
 #' 

@@ -9,9 +9,9 @@ pi_hat_est(data, X, A, val_idx, sl.lib)
 \arguments{
 \item{data}{A dataframe containing the outcome, treatment and covariates}
 
-\item{X}{A vector of covariates}
+\item{X}{A vector of covariate names}
 
-\item{A}{A vector of treatments}
+\item{A}{String containing treatment name}
 
 \item{sl.lib}{A vector of super learner libraries to use}
 }
