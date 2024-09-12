@@ -19,9 +19,10 @@ knitr::opts_chunk$set(
 Installation can be carried out with `devtools`
 
 ```{r, eval=FALSE}
-devtools::install_github("kbarnatchez/controlVariatesME")
+devtools::install_github("keithbarnatchez/controlVariatesME")
 ```
 
 ```{r setup}
 library(controlVariatesME)
 ```
+
