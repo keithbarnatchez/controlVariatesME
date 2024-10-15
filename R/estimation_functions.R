@@ -59,9 +59,15 @@ controlVariatesME <- function(df, X,
   ci_high <- tau_cv + qnorm(0.975)*sqrt(var_hat)
   
   # Return the ATE est and associated variance
-  return(list(tau_cv=tau_cv,
-              var_hat=var_hat,
-              CI=c(ci_low,ci_high))
+  return(list(ate_hat=tau_cv,
+              se_hat=sqrt(var_hat),
+              gamma_hat=gamma_hat,
+              V_hat=V_hat,
+              v_hat=v_hat,
+              ate_hat_val_ep=tau_ep_val,
+              ate_hat_main_ep=tau_ep_main,
+              ate_hat_val=tau_hat_val
+              )
   )
   
 }

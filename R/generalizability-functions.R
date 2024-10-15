@@ -275,8 +275,12 @@ controlVariatesMEGen <- function(data,
   # Get variance estimate for CV est variance
   var_hat <- v_hat_val - gamma_hat^2/V_hat
   
-  return(list(tau_cv=tau_cv,
-              var_hat=var_hat,
+  return(list(ate_hat=tau_cv,
+              se_hat=sqrt(var_hat),
               gamma_hat=gamma_hat,
-              V_hat=V_hat))
+              V_hat=V_hat,
+              v_hat = v_hat_val,
+              ate_hat_val=tau_hat_val,
+              ate_hat_val_ep=tau_hat_ep_val,
+              ate_hat_main_ep=tau_hat_ep_main))
 }
